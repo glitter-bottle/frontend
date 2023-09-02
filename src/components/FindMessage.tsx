@@ -1,10 +1,6 @@
 import styled from "styled-components"
 
 const Content = styled.div`
-  position: absolute;
-  top: 25%;
-  left: 50%;
-  transform: translateX(-50%);
 `
 const Text = styled.p`
   font-family: Pretendard;
