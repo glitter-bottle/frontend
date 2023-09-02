@@ -1,0 +1,481 @@
+@charset "utf-8";
+
+/* font-face */
+/* Bold 900 */
+@font-face {
+  font-family: 'Pretendard';
+  src: url('../fonts/Pretendard-Bold.woff2');
+  font-weight: 900;
+}
+
+/* Semibold 700 */
+@font-face {
+  font-family: 'Pretendard';
+  src: url('../fonts/Pretendard-SemiBold.woff2');
+  font-weight: 700;
+}
+
+/* Medium 500 */
+@font-face {
+  font-family: 'Pretendard';
+  src: url('../fonts/Pretendard-Medium.woff2');
+  font-weight: 500;
+}
+
+/* Regular 400 */
+@font-face {
+  font-family: 'Pretendard';
+  src: url('../fonts/Pretendard-Regular.woff2');
+  font-weight: 400;
+}
+/* Reset */
+body * {
+  box-sizing: border-box;
+  outline: none;
+}
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+div,
+p,
+blockquote,
+pre,
+code,
+address,
+ul,
+ol,
+li,
+menu,
+nav,
+section,
+article,
+aside,
+dl,
+dt,
+dd,
+table,
+thead,
+tbody,
+tfoot,
+label,
+caption,
+th,
+td,
+form,
+fieldset,
+legend,
+hr,
+input,
+button,
+textarea,
+object,
+figure,
+figcaption {
+  margin: 0;
+  padding: 0;
+}
+body {
+  -webkit-text-size-adjust: 100%;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+body,
+input,
+select,
+textarea,
+button {
+  border: none;
+  font-size: 1.4rem;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: #333333;
+}
+ul,
+ol,
+li {
+  list-style: none;
+}
+table {
+  border-spacing: 0;
+}
+img,
+fieldset {
+  border: 0;
+}
+address,
+cite,
+code {
+  font-style: normal;
+  font-weight: normal;
+}
+em,
+i {
+  font-style: normal;
+}
+label,
+img,
+input,
+select,
+textarea,
+button {
+  vertical-align: middle;
+}
+.hide,
+legend {
+  overflow: hidden;
+  display: block;
+  position: absolute;
+  border: 0;
+  width: 1px;
+  height: 1px;
+  clip: rect(1px, 1px, 1px, 1px);
+}
+hr {
+  display: none;
+}
+main,
+header,
+section,
+nav,
+footer,
+aside,
+article,
+figure {
+  display: block;
+}
+a {
+  color: #333333;
+  text-decoration: none;
+}
+button {
+  cursor: pointer;
+  color: #333333;
+  background-color: transparent;
+  outline: none;
+  font-size: 1.6rem;
+}
+caption {
+  position: relative;
+}
+
+/* Form */
+input[type='password'],
+input[type='tel'],
+input[type='time'],
+input[type='text'],
+input[type='search'],
+input[type='email'],
+input[type='file'],
+input[type='url'],
+input[type='number'],
+input[type='date'],
+textarea {
+  font-size: 1.4rem;
+  color: #333333;
+  border: 1px solid #e0e0e0;
+  background-color: #fff;
+  transition: all 0.5s;
+  box-sizing: border-box;
+  vertical-align: middle;
+  border-radius: 4px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+pre {
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+input[type='password']::-moz-reveal,
+input[type='password']::-ms-reveal {
+  display: none;
+  width: 0;
+  height: 0;
+}
+input[type='email'],
+input[type='number'],
+input[type='password'],
+input[type='text'] {
+  padding: 0 1.6rem;
+  height: 4rem;
+  line-height: 4rem;
+  border-radius: 4px;
+}
+input::-webkit-input-placeholder {
+  color: #c4c4c4;
+  font-size: 1.4rem;
+  line-height: 100%;
+}
+input:not([type='range']):focus,
+textarea:focus {
+  border: 1px solid #679dff !important;
+}
+textarea {
+  padding: 1rem 1.6rem;
+  border: 1px solid #e1e1e1;
+}
+textarea::-webkit-input-placeholder {
+  color: #c4c4c4;
+}
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* input[type='number'] {
+  -moz-appearance: textfield;
+} */
+input[type='text']::-ms-clear {
+  display: none;
+}
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+select::-ms-expand {
+  display: none;
+}
+
+input[type='number'][readonly],
+input[type='tel'][readonly],
+input[type='text'][readonly],
+input[type='password'][readonly],
+input[type='email'][readonly],
+input[type='search'][readonly] {
+  /* -webkit-appearance: none; */
+  font-size: 1.4rem;
+  padding: 0 1.6rem;
+  background: #f8f8f8;
+  border: 1px solid #e0e0e0;
+  color: #333333;
+}
+input[type='tel'][disabled],
+input[type='text'][disabled],
+input[type='password'][disabled],
+input[type='search'][disabled],
+input[type='email'][disabled] {
+  /* -webkit-appearance: none; */
+  font-size: 1.4rem;
+  padding: 0 1.6rem;
+  background: #f8f8f8;
+  border: 1px solid #e0e0e0;
+  color: #c4c4c4;
+}
+select:disabled {
+  color: #c4c4c4;
+  background-color: #f8f8f8;
+  border: 1px solid #e0e0e0;
+  cursor: default;
+}
+textarea[readonly],
+textarea[disabled] {
+  padding: 1.2rem;
+  color: #e1e1e1;
+  font-weight: normal;
+  line-height: 100%;
+  height: 4rem;
+  background: #f8f8f9;
+  border: 1px solid #e1e1e1;
+}
+.clear {
+  clear: both;
+}
+.clear:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+
+/* 텍스트박스(공통사항)-자동완성 */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-transition: background-color 9999s ease-out;
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset !important;
+  -webkit-text-fill-color: #333 !important;
+}
+
+/* 스크롤 스타일 */
+.scroll {
+  overflow: auto;
+}
+.scroll::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+.scroll::-webkit-scrollbar-thumb {
+  background-color: #e0e0e0;
+  border-radius: 100px;
+}
+.scroll::-webkit-scrollbar-track {
+  background-color: #e5e5e5;
+  border-radius: 100px;
+  background-clip: padding-box;
+  border: 3px solid transparent;
+}
+
+body {
+  margin: auto;
+  min-width: 320px;
+  max-width: 500px;
+  -webkit-text-size-adjust: 100%;
+  word-wrap: break-word;
+  word-break: break-all;
+  background: #fff;
+  /* 뷰포트 모바일 대응 */
+  min-height: calc(var(--vh, 1vh) * 100);
+}
+body #root {
+  width: 100%;
+  min-height: inherit;
+}
+
+body * {
+  box-sizing: border-box;
+  outline: none;
+}
+
+/* REM rules */
+html {
+  font-size: 5px;
+}
+/* header,
+main {
+  border-left: 1px solid colors.$main-border-color;
+  border-right: 1px solid colors.$main-border-color;
+} */
+@media screen and (min-width: 216px) {
+  html {
+    font-size: 6px;
+  }
+}
+
+@media screen and (min-width: 229px) {
+  html {
+    font-size: 6.3611px;
+  }
+}
+
+@media screen and (min-width: 250px) {
+  html {
+    font-size: 6.9444px;
+  }
+}
+
+@media screen and (min-width: 252px) {
+  html {
+    font-size: 7px;
+  }
+}
+
+@media screen and (min-width: 288px) {
+  html {
+    font-size: 8px;
+  }
+}
+
+@media screen and (min-width: 292px) {
+  html {
+    font-size: 8.1111px;
+  }
+}
+
+/* iphone 5 */
+@media screen and (min-width: 320px) {
+  html {
+    font-size: 8.8888px;
+  }
+}
+
+@media screen and (min-width: 324px) {
+  html {
+    font-size: 9px;
+  }
+}
+
+@media screen and (min-width: 360px) {
+  html {
+    font-size: 10px;
+  }
+}
+
+/* iphone 6 */
+@media screen and (min-width: 375px) {
+  html {
+    font-size: 10.4166px;
+  }
+}
+
+/* iphone 12, 12pro */
+@media screen and (min-width: 390px) {
+  html {
+    font-size: 10.8334px;
+  }
+}
+
+@media screen and (min-width: 396px) {
+  html {
+    font-size: 11px;
+  }
+}
+
+@media screen and (min-width: 411px) {
+  html {
+    font-size: 11.4166px;
+  }
+}
+
+@media screen and (min-width: 412px) {
+  html {
+    font-size: 11.4444px;
+  }
+}
+
+/* iphone 6 Plus */
+@media screen and (min-width: 414px) {
+  html {
+    font-size: 11.5px;
+  }
+}
+
+/* iphone 12 Pro Max */
+@media screen and (min-width: 428px) {
+  html {
+    font-size: 11.8889px;
+  }
+}
+
+@media screen and (min-width: 432px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+@media screen and (min-width: 468px) {
+  html {
+    font-size: 13px;
+  }
+}
+
+@media screen and (min-width: 504px) {
+  html {
+    font-size: 14px;
+  }
+}
