@@ -32,7 +32,7 @@ const Container = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   background-image: url('/images/mobile_background.gif');
-`;
+`
 
 const Layout = () => {
   return (

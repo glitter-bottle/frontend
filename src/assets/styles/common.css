@@ -331,6 +331,28 @@ input:-webkit-autofill:active {
   border: 3px solid transparent;
 }
 
+body {
+  margin: auto;
+  min-width: 320px;
+  max-width: 500px;
+  -webkit-text-size-adjust: 100%;
+  word-wrap: break-word;
+  word-break: break-all;
+  background: #fff;
+  /* 뷰포트 모바일 대응 */
+  min-height: calc(var(--vh, 1vh) * 100);
+}
+body #root {
+    width: 100%;
+    min-height: inherit;
+}
+
+body * {
+    box-sizing: border-box;
+    outline: none;
+  }
+
+
 /* REM rules */
 html {
   font-size: 5px;
