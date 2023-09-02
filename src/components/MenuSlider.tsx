@@ -44,7 +44,7 @@ const DEFAULT_SETTINGS: Settings = {
   arrows: true,
   infinite: true,
   speed: 500,
-  slidesToShow: 1,
+  slidesToShow: 2.5,
   slidesToScroll: 1,
   swipe: true,
   draggable: true,
