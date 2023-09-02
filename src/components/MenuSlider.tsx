@@ -12,7 +12,7 @@ interface Props {
 }
 
 const ArrowButton = styled.button<{ pos?: 'left' | 'right' }>`
-  padding: 16px;
+  padding: 18px;
   border-radius: 50%;
   z-index: 1;
   top: 40%;
@@ -56,7 +56,7 @@ const Content = styled.div`
 `
 const ReactSlider = styled(Slider)`
   .slick-track {
-    
+
   }
 `
 
