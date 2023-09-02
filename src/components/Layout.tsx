@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 import { Outlet } from 'react-router-dom';
 
 const LayoutWrap = styled.main`
@@ -21,18 +21,13 @@ const Container = styled.div`
   width: 500px;
   position: relative;
   min-height: 100vh;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 80px 40px;
   height: 100%;
+  box-sizing: border-box;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   background-image: url('/images/mobile_background.gif');
-`
+`;
 
 const Layout = () => {
   return (
@@ -46,4 +41,4 @@ const Layout = () => {
   );
 };
 
-export default Layout
+export default Layout;

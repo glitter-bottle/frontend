@@ -343,15 +343,14 @@ body {
   min-height: calc(var(--vh, 1vh) * 100);
 }
 body #root {
-    width: 100%;
-    min-height: inherit;
+  width: 100%;
+  min-height: inherit;
 }
 
 body * {
-    box-sizing: border-box;
-    outline: none;
-  }
-
+  box-sizing: border-box;
+  outline: none;
+}
 
 /* REM rules */
 html {
