@@ -6,11 +6,15 @@ const Text = styled.p`
   font-family: Pretendard;
   font-weight: 400;
   font-size: 1rem;
+  margin-bottom: 3.5rem;
 `
 
-const FindMessage = () => {
+interface Props {
+  isFound: boolean
+}
+
+const FindMessage = ({isFound}:Props) => {
   const user = '한소희';
-  const isFound = true; 
 
   return (
     <>
