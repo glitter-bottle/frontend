@@ -1,8 +1,12 @@
-
+import Header from "../components/Header"
+import MessageSection from "../features/MessagePage"
 
 const MessagePage = () => {
   return (
-    <div>✨🫗Glitter Bottle</div>
+    <>
+      <Header />
+      <MessageSection />
+    </>
   )
 }
 
