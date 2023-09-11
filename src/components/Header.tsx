@@ -3,11 +3,10 @@ import { CiHome } from 'react-icons/ci';
 
 const Base = styled.header`
   width: 100%;
-  height: 10rem;
+  height: 6.2rem;
   display: flex;
   align-items: center;
-  padding: 0 3rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0 2.9rem;
 `;
 const Navigation = styled.nav`
   width: 100%;
@@ -24,11 +23,12 @@ const MenuButton = styled.button`
 const MenuTitle = styled.span`
   font-family: Pretendard;
   font-weight: 400;
-  font-size: 0.8rem;
+  font-size: .8rem;
   display: block;
 `;
 const BottleButton = styled.img`
-  width: 3rem;
+  height: 2.1rem;
+  margin-bottom: .41rem;
 `;
 
 const Header = () => {
@@ -39,7 +39,7 @@ const Header = () => {
           <Menu>
             <Link href='/home'>
               <MenuButton>
-                <CiHome size='35' />
+                <CiHome size='27' />
                 <MenuTitle>홈 화면</MenuTitle>
               </MenuButton>
             </Link>
@@ -47,7 +47,7 @@ const Header = () => {
           <Menu>
             <Link href='/'>
               <MenuButton>
-                <BottleButton src='images/bottle_logo.png' alt='' />
+                <BottleButton src='images/header/header-logo.png' alt='' />
                 <MenuTitle>내 보틀</MenuTitle>
               </MenuButton>
             </Link>
