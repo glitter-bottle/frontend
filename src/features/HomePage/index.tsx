@@ -11,19 +11,19 @@ import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
 const menuData = [
   {
     href: '/message',
-    imgSrc: 'images/home_healing_message.png',
+    imgSrc: 'images/home/home_healing_message.png',
     title: '힐링 메시지',
     subtitle: 'healing message',
   },
   {
     href: '/message',
-    imgSrc: 'images/home_life_quotes.png',
+    imgSrc: 'images/home/home_life_quotes.png',
     title: '명언',
     subtitle: 'life quotes',
   },
   {
     href: '/message',
-    imgSrc: 'images/home_positive_affirmation.png',
+    imgSrc: 'images/home/home_positive_affirmation.png',
     title: '긍정 확언',
     subtitle: 'positive affirmation',
   },
@@ -35,11 +35,11 @@ const ArrowButton = styled.button<{ pos?: 'left' | 'right' }>`
   ${({ pos }) =>
     pos === 'left'
       ? css`
-          left: 2rem;
+          left: 1.7rem;
           transform: translate(-50%, -50%);
         `
       : css`
-          right: 2rem;
+          right: 1.7rem;
           transform: translate(50%, -50%);
         `};
   &:before {
@@ -50,19 +50,19 @@ const ArrowButton = styled.button<{ pos?: 'left' | 'right' }>`
     top: 50%;
     left: 70%;
     transform: translate(-50%, -50%);
-    width: 3rem;
-    height: 3rem;
+    width: 2rem;
+    height: 2rem;
     color: #000;
   }
 `
 
 const ReactSlider = styled(Slider)`
 .slick-slide {
-  padding-top: 2rem;
-  margin-bottom: 2rem;
+  padding-top: 2.5rem;
+  margin-bottom: 1.6rem;
 }
 .slick-slide img {
-  transform:scale(.9);
+  transform:scale(.85);
   transition:transform .5s linear;
 }
 .slick-center {
@@ -72,13 +72,13 @@ const ReactSlider = styled(Slider)`
 .slick-dots > li {
   width:auto;
   height:auto;
-  margin:0 .3rem;
+  margin:0 .2rem;
 }
 .slick-dots > li > button {
-  width:.8rem;
-  height:.8rem;
+  width:100%;
+  height:100%;
   border:1px solid #fff;;
-  border-radius:4.5rem;
+  border-radius:4rem;
   box-sizing:border-box;
   display:block;
   position:relative;
@@ -87,7 +87,7 @@ const ReactSlider = styled(Slider)`
   content:"";
   width:100%;
   height:100%;
-  border-radius:4.5rem;
+  border-radius:4rem;
   background-color:#fff;
   opacity:0;
   transition:opacity .8s;
@@ -107,15 +107,16 @@ const MenuImg = styled.img`
 `
 const MenuTitle = styled.p`
   position: absolute;
-  top:30%;
+  top:40%;
   left: 50%; 
   transform: translate(-50%);
-  font-size: 2rem;
+  font-size: 1.4rem;
   color: #fff;
+  text-align:center;
 `
 const MenuSubtitle = styled.span`
   display: block;
-  font-size: 1.5rem;
+  font-size: 1rem;
 `
 const DEFAULT_SETTINGS: Settings = {
   dots: true,

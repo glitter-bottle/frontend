@@ -3,8 +3,8 @@ import styled from "styled-components";
 const Today = styled.p`
   font-family: Pretendard;
   font-weight: 400;
-  font-size: 1rem;
-  margin-bottom: 2rem;
+  font-size: 1.2rem;
+  text-align: center;
 `
 
 const TodayDate = () => {
