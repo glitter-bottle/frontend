@@ -5,9 +5,9 @@ const Content = styled.div`
 const Text = styled.p`
   font-family: Pretendard;
   font-weight: 400;
-  font-size: 1.2rem;
+  font-size: 1rem;
   text-align: center;
-  margin: 2rem 0;
+  margin: 1rem 0;
 `
 
 interface Props {

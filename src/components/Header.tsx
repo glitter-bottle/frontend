@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { CiHome } from 'react-icons/ci';
+import { FiHome } from 'react-icons/fi';
 
 const Base = styled.header`
   width: 100%;
@@ -39,7 +39,7 @@ const Header = () => {
           <Menu>
             <Link href='/home'>
               <MenuButton>
-                <CiHome size='27' />
+                <FiHome size='27' />
                 <MenuTitle>홈 화면</MenuTitle>
               </MenuButton>
             </Link>

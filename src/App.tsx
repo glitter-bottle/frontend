@@ -5,6 +5,7 @@ import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import MainPage from './pages/MainPage';
 import MessagePage from './pages/MessagePage';
+import MessageDetailPage from './pages/MessageDetailPage';
 
 function App() {
   function setScreenSize() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/main" element={<MainPage />} />
           <Route path="/message" element={<MessagePage />} />
+          <Route path="/message-detail" element={<MessageDetailPage />} />
         </Route>
       </Routes>
     </>
