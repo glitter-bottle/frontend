@@ -126,7 +126,11 @@ const MessageSection = () => {
   const navigate = useNavigate();
 
   const handleRandomWrappingClick = () => {
-    navigate('/message-detail')
+    navigate('/message-detail', {
+      state: {
+        image: randomData[randomNum].image
+      }
+    })
   }
   return (
     <Container>
