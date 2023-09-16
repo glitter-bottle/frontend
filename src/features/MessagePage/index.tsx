@@ -131,6 +131,7 @@ const MessageSection = () => {
         image: randomData[randomNum].image
       }
     })
+
   }
   return (
     <Container>
