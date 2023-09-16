@@ -1,8 +1,10 @@
-
+import MessageDetailSection from "../features/MessageDetailPage"
 
 const MessageDetailPage = () => {
   return (
-    <div>✨🫗Glitter Bottle</div>
+    <>
+      <MessageDetailSection />
+    </>
   )
 }
 
