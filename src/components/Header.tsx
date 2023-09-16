@@ -2,6 +2,9 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { FiHome } from 'react-icons/fi';
 import { MdLogout } from 'react-icons/md';
+import { auth } from '../firebassApp';
+import { signOut } from 'firebase/auth';
+import useAuth from '../hooks/useAuth';
 
 const Base = styled.header`
   width: 100%;
@@ -41,7 +44,14 @@ const BottleButton = styled.img`
 
 const Header = () => {
   const location = useLocation();
+  const user = useAuth(); 
 
+  const handleLogout = async () => {
+    if (user) {
+      await signOut(auth);
+      localStorage.removeItem('nickName');
+    }
+  };
   if (location.pathname === '/mybottle') {
     return (
       <Base>
@@ -56,7 +66,7 @@ const Header = () => {
               </Link>
             </Menu>
             <Menu>
-              <Link href='/'>
+              <Link onClick={handleLogout} href='/'>
                 <MenuButton>
                   <MdLogout size='24' />
                   <MenuTitle>로그아웃</MenuTitle>
