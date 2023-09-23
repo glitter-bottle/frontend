@@ -1,13 +1,17 @@
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { CiHome } from 'react-icons/ci';
+import { FiHome } from 'react-icons/fi';
+import { MdLogout } from 'react-icons/md';
+import { auth } from '../firebassApp';
+import { signOut } from 'firebase/auth';
+import useAuth from '../hooks/useAuth';
 
 const Base = styled.header`
   width: 100%;
-  height: 10rem;
+  height: 6.2rem;
   display: flex;
   align-items: center;
-  padding: 0 3rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0 2.9rem;
 `;
 const Navigation = styled.nav`
   width: 100%;
@@ -15,23 +19,66 @@ const Navigation = styled.nav`
 const MenuList = styled.ul`
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
 `;
 const Menu = styled.li``;
 const Link = styled.a``;
 const MenuButton = styled.button`
   color: #fff;
+  height: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 `;
 const MenuTitle = styled.span`
   font-family: Pretendard;
   font-weight: 400;
-  font-size: 0.8rem;
+  font-size: 1rem;
   display: block;
 `;
 const BottleButton = styled.img`
-  width: 3rem;
+  height: 2.4rem;
+  // margin-bottom: 0.41rem;
 `;
 
 const Header = () => {
+  const location = useLocation();
+  const user = useAuth(); 
+
+  const handleLogout = async () => {
+    if (user) {
+      await signOut(auth);
+      localStorage.removeItem('nickName');
+    }
+  };
+  if (location.pathname === '/mybottle') {
+    return (
+      <Base>
+        <Navigation>
+          <MenuList>
+            <Menu>
+              <Link href='/home'>
+                <MenuButton>
+                  <FiHome size='24' />
+                  <MenuTitle>홈 화면</MenuTitle>
+                </MenuButton>
+              </Link>
+            </Menu>
+            <Menu>
+              <Link onClick={handleLogout} href='/'>
+                <MenuButton>
+                  <MdLogout size='24' />
+                  <MenuTitle>로그아웃</MenuTitle>
+                </MenuButton>
+              </Link>
+            </Menu>
+          </MenuList>
+        </Navigation>
+      </Base>
+    );
+  }
+
   return (
     <Base>
       <Navigation>
@@ -39,15 +86,15 @@ const Header = () => {
           <Menu>
             <Link href='/home'>
               <MenuButton>
-                <CiHome size='35' />
+                <FiHome size='24' />
                 <MenuTitle>홈 화면</MenuTitle>
               </MenuButton>
             </Link>
           </Menu>
           <Menu>
-            <Link href='/'>
+            <Link href='/mybottle'>
               <MenuButton>
-                <BottleButton src='images/bottle_logo.png' alt='' />
+                <BottleButton src='images/logo_header.png' alt='logo' />
                 <MenuTitle>내 보틀</MenuTitle>
               </MenuButton>
             </Link>

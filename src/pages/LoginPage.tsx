@@ -1,9 +1,11 @@
-
+import LoginSection from "../features/LoginPage"
 
 const LoginPage = () => {
   return (
-    <div>✨🫗Glitter Bottle</div>
-  )
-}
+    <>
+      <LoginSection />
+    </>
+  );
+};
 
-export default LoginPage
+export default LoginPage;

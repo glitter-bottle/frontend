@@ -1,23 +1,16 @@
-
-import styled from "styled-components"
-import Header from "../components/Header"
-import HomeSection from "../features/HomePage"
-
-
-const Container = styled.div`
-  width: 100%;  
-`
+import Header from '../components/Header';
+import HomeSection from '../features/HomePage';
+import useAuth from '../hooks/useAuth';
 
 const HomePage = () => {
+  const user = useAuth();
+
   return (
     <>
       <Header />
-        <Container>
-          <HomeSection />
-        </Container>
+      <HomeSection />
     </>
-  )
-}
+  );
+};
 
-export default HomePage
-
+export default HomePage;
