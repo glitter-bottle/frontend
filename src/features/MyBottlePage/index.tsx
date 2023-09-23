@@ -1,17 +1,15 @@
+import React from 'react';
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../firebassApp";
-
+import { db } from "../../firebaseApp";
 
 interface BgDataProps {
     id: string;
     category: string;
     imgUrl: string;
-    content: string;
     key: number;
 }
-
 
 const MybottleSection = () => {
     const [selectedFilters, setSelectedFilters] = useState<string[]>(["전체"]);
@@ -19,19 +17,19 @@ const MybottleSection = () => {
     const filters = ["전체", "명언", "긍정확언", "힐링메시지"];
 
     const getBg = async () => {
-        const datas = await getDocs(collection(db, "bg-data"));
+        const datas = await getDocs(collection(db, "random-data"));
 
         datas?.forEach((doc) => {
-            const dataObj = {...doc.data(), id: doc.id}
+            const dataObj = { ...doc.data(), id: doc.id };
             setBgData((prev) => [...prev, dataObj as BgDataProps]);
-        })
-    }
+        });
+    };
 
     useEffect(() => {
         getBg();
-    }, [])
+    }, []);
 
-    console.log(bgData)
+    console.log(bgData);
 
     const handleFilterClick = (selectedCategory: string) => {
         if (selectedCategory === "전체") {
@@ -41,14 +39,11 @@ const MybottleSection = () => {
             // 선택한 탭 업데이트
             setSelectedFilters([selectedCategory]);
         }
-    }
+    };
 
     const filteredData = selectedFilters.includes("전체")
-    ? bgData
-    : bgData.filter(item => selectedFilters.includes(item.category));
-
-    
-
+        ? bgData
+        : bgData.filter((item) => selectedFilters.includes(item.category));
 
     return (
         <Container>
