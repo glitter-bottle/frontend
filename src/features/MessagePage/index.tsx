@@ -2,30 +2,24 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import TodayDate from '../../components/TodayDate';
 import FindMessage from '../../components/FindMessage';
-
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import{ FiDownload, FiRefreshCcw, FiClipboard, FiMaximize2 } from 'react-icons/fi'
 
 const randomData = [
   {
-    image: 'images/random1.png',
-    message: '당신은 움츠리기보다/활짝 피어나도록 만들어진 존재입니다',
-    authorship: '오프라 윈프리'
+    image: 'images/random1.png'
   },
   {
-    image: 'images/random2.png',
-    message: '자신의 능력을 믿어야 한다./그리고 끝까지 굳세게 밀고 나가라',
-    authorship: '로잘린 카터'
+    image: 'images/random2.png'
   },
   {
-    image: 'images/random3.png',
-    message: '행복의 한 쪽 문이 닫히면/다른 쪽 문이 열린다./그러나 흔히 우리는/닫혀진 문을 오랫동안 보기 때문에/우리를 위해 열려 있는 문을 보지 못한다.',
-    authorship: '헬렌 켈러'
+    image: 'images/random3.png'
   }
 ]
 
-let randomNum = Math.floor(Math.random() * randomData.length);
-const randomArr = randomData[randomNum].message.split('/');
+
+// const randomArr = randomData[randomNum].message.split('/');
 
 const Container = styled.div`
   position: relative;
@@ -73,21 +67,21 @@ const MaxIcon = styled.div`
   right: 5%;
   z-index:2;
 `
-const RandomMessage = styled.p`
-  width: 60%;
-  position: absolute;
-  top: 35%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  word-break: keep-all;
-  font-size: 1rem;
-  text-align: center;
-`
-const RandomAuthorship = styled.span`
-  display: block;
-  margin-top: 2rem;
-  padding: 0 3rem;
-`
+// const RandomMessage = styled.p`
+//   width: 60%;
+//   position: absolute;
+//   top: 35%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   word-break: keep-all;
+//   font-size: 1rem;
+//   text-align: center;
+// `
+// const RandomAuthorship = styled.span`
+//   display: block;
+//   margin-top: 2rem;
+//   padding: 0 3rem;
+// `
 const BottomSection = styled.div`
   width: calc(100% - 6rem);
   position: absolute;
@@ -122,8 +116,31 @@ const BtnText = styled.p`
 `
 
 const MessageSection = () => {
+  const location = useLocation();
+
+const keyGroup = location.state.menuItem;
+
+let randomNum: number;
+
+if (keyGroup === 10) {
+  randomNum = Math.floor(Math.random() * 10) + 1; // 범위: 1~10
+  console.log(randomNum)
+} else if (keyGroup === 20) {
+  randomNum = Math.floor(Math.random() * 10) + 11; // 범위: 11~20
+} else if (keyGroup === 30) {
+  randomNum = Math.floor(Math.random() * 10) + 21; // 범위: 21~30
+} else {
+  randomNum = 0; // 다른 경우에는 0으로 초기화
+} 
+
+console.log(randomNum)
+
+  // const keyGroup = location.state.menuItem;
+  // console.log(keyGroup)
 
   const navigate = useNavigate();
+
+  // let randomNum = Math.floor(Math.random() * randomData.length);
 
   const handleRandomWrappingClick = () => {
     navigate('/message-detail', {
@@ -142,7 +159,7 @@ const MessageSection = () => {
         <MaxIcon>
           <FiMaximize2 size='20'/>
         </MaxIcon>
-        <RandomMessage>
+        {/* <RandomMessage>
           {
             randomArr.map((el, i)=>(
               <React.Fragment key={i}>
@@ -154,7 +171,7 @@ const MessageSection = () => {
           <RandomAuthorship>
             {`${randomData[randomNum].authorship}`}
           </RandomAuthorship>
-        </RandomMessage>
+        </RandomMessage> */}
       </RandomWrapping>
       <BottomSection>
         <BottomBtnList>
