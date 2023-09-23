@@ -1,3 +1,4 @@
+import React from "react";
 import TodayDate from '../../components/TodayDate';
 import FindMessage from '../../components/FindMessage';
 import Slider, { Settings } from 'react-slick';

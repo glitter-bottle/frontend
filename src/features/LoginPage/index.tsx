@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { GoogleAuthProvider } from 'firebase/auth';
 import { signInWithPopup } from 'firebase/auth';
-import { auth } from '../../firebassApp';
+import { auth } from '../../firebaseApp';
 
 const LoginPage = () => {
   const navigate = useNavigate();
