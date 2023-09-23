@@ -1,3 +1,4 @@
+import React from "react";
 import TodayDate from '../../components/TodayDate';
 import FindMessage from '../../components/FindMessage';
 import Slider, { Settings } from 'react-slick';
@@ -14,18 +15,21 @@ const menuData = [
     imgSrc: 'images/home/home_healing_message.png',
     title: '힐링 메시지',
     subtitle: 'healing message',
+    keyGroup: 10,
   },
   {
     href: '/message',
     imgSrc: 'images/home/home_life_quotes.png',
     title: '명언',
     subtitle: 'life quotes',
+    keyGroup: 20,
   },
   {
     href: '/message',
     imgSrc: 'images/home/home_positive_affirmation.png',
     title: '긍정 확언',
     subtitle: 'positive affirmation',
+    keyGroup: 30,
   },
 ]
 
