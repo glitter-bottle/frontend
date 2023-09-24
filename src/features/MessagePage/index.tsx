@@ -73,6 +73,15 @@ const MessageSection = () => {
     }, 3000);
   };
 
+  const handleSaveToBottle = () => {
+    const nickName = localStorage.getItem('nickName');
+    console.log(nickName)
+    if (nickName === null) {
+      alert('💁‍♀️ 로그인 후 이용해주세요');
+      window.location.href = '/';
+    }
+  };
+
   return (
     <Container>
       <TodayDate />
@@ -102,7 +111,7 @@ const MessageSection = () => {
               <AiFillCheckCircle /> 이미지가 저장되었습니다.
             </DownloadMessage>}
           </BttomBtn>
-          <BttomBtn>
+          <BttomBtn onClick={handleSaveToBottle}>
             <Link>
               <FiClipboard size='27'/>
             </Link>
