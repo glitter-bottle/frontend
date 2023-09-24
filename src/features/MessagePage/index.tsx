@@ -9,84 +9,6 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebaseApp";
 import { useEffect, useState } from 'react';
 
-const Container = styled.div`
-  position: relative;
-  width:100%;
-  height:calc(100% - 6.2rem);
-`
-const RandomWrapping = styled.div`
-  width: calc(100% - 6rem);
-  margin: 0 auto;
-  overflow:hidden;
-  position: relative;
-  cursor: pointer;
-  border-radius: 30px;
-  &:hover svg {
-    transition: transform 1s;
-    transform: scale(1.2); 
-  }
-  &::before {
-    content: "클릭하여 확대해서 보기";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    font-size: 14px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    background-color: #000;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-    z-index: 1;
-  }
-  &:hover::before {
-    opacity: 0.8; /* 호버 시 배경색이 서서히 나타나도록 설정 */
-  }
-`
-const RandomImg = styled.img`
-  width: 100%;
-`
-const MaxIcon = styled.div`
-  position: absolute;
-  top: 3%;
-  right: 5%;
-  z-index:2;
-`
-const BottomSection = styled.div`
-  width: calc(100% - 6rem);
-  position: absolute;
-  bottom:0;
-  left:50%;
-  transform: translate(-50%, -50%);
-`
-const BottomBtnList = styled.ul`
-  display: flex;
-  justify-content: space-between;
-`
-const BttomBtn =styled.li`
-  width:60px;
-  height:60px;
-  background-color:#3E3F49;
-  margin: auto;
-  border-radius: 20px;
-`
-const Link = styled.a`
-  width:60px;
-  height:60px;
-  display: block;
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: .3rem;
-`
-const BtnText = styled.p`
-  font-size: 5px;
-  text-align: center;
-`
 interface BgDataProps {
   id: string;
   category: string;
@@ -162,7 +84,7 @@ const MessageSection = () => {
       <TodayDate />
       <FindMessage isFound={false}/>
       <RandomWrapping onClick={handleRandomWrappingClick}>
-        <RandomImg src={imgUrl} />
+        <RandomImg imgUrl={imgUrl} />
         <MaxIcon>
           <FiMaximize2 size='20'/>
         </MaxIcon>
@@ -194,3 +116,89 @@ const MessageSection = () => {
 };
 
 export default MessageSection;
+
+const Container = styled.div`
+  position: relative;
+  width:100%;
+  height:calc(100% - 6.2rem);
+`
+const RandomWrapping = styled.div`
+  width: calc(100% - 6rem);
+  height: calc(100vh - 22rem);
+  margin: 0 auto;
+  overflow:hidden;
+  position: relative;
+  cursor: pointer;
+  border-radius: 30px;
+  &:hover svg {
+    transition: transform 1s;
+    transform: scale(1.2); 
+  }
+  &::before {
+    content: "클릭하여 확대해서 보기";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background-color: #000;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    z-index: 1;
+  }
+  &:hover::before {
+    opacity: 0.8; /* 호버 시 배경색이 서서히 나타나도록 설정 */
+  }
+`
+const RandomImg = styled.div<{ imgUrl: string }>`
+  width: 100%;
+  height: 100%;
+  background-image: url(${props => props.imgUrl});
+  background-size: cover; 
+  background-position: center; /* 이미지를 가운데 정렬 */
+`
+
+const MaxIcon = styled.div`
+  position: absolute;
+  top: 3%;
+  right: 5%;
+  z-index:2;
+`
+const BottomSection = styled.div`
+  width: calc(100% - 6rem);
+  position: absolute;
+  bottom:0;
+  left:50%;
+  transform: translate(-50%, -50%);
+`
+const BottomBtnList = styled.ul`
+  display: flex;
+  justify-content: space-between;
+`
+const BttomBtn =styled.li`
+  width:60px;
+  height:60px;
+  background-color:#3E3F49;
+  margin: auto;
+  border-radius: 20px;
+`
+const Link = styled.a`
+  width:60px;
+  height:60px;
+  display: block;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: .3rem;
+  cursor: pointer;
+`
+const BtnText = styled.p`
+  font-size: 5px;
+  text-align: center;
+`

@@ -30,6 +30,34 @@ const menuData = [
   },
 ]
 
+interface Props {
+  settings?: Settings;
+}
+
+const HomeSection = ({ settings = DEFAULT_SETTINGS }: Props) => {
+  const navigate = useNavigate();
+
+  return (
+    <>
+      <TodayDate />
+      <FindMessage isFound={true}/>
+      <ReactSlider {...settings} className='slider' >
+        {menuData.map((menuItem, index) => (
+          <Menu key={index} onClick={()=>{
+            navigate('/message', { state: { menuItem } });
+          }}>
+            <MenuImg src={menuItem.imgSrc} alt={`${menuItem.title}의 이미지`} />
+            <MenuTitle>{menuItem.title}<MenuSubtitle>{menuItem.subtitle}</MenuSubtitle></MenuTitle>
+          </Menu>
+        ))}
+      </ReactSlider>
+    </>
+  );
+};
+
+export default HomeSection;
+
+
 const ArrowButton = styled.button<{ pos?: 'left' | 'right' }>`
   z-index: 1;
   top: 45%;
@@ -145,30 +173,3 @@ const DEFAULT_SETTINGS: Settings = {
     </ArrowButton>
   ),
 };
-
-interface Props {
-  settings?: Settings;
-}
-
-const HomeSection = ({ settings = DEFAULT_SETTINGS }: Props) => {
-  const navigate = useNavigate();
-
-  return (
-    <>
-      <TodayDate />
-      <FindMessage isFound={true}/>
-      <ReactSlider {...settings} className='slider' >
-        {menuData.map((menuItem, index) => (
-          <Menu key={index} onClick={()=>{
-            navigate('/message', { state: { menuItem } });
-          }}>
-            <MenuImg src={menuItem.imgSrc} alt={`${menuItem.title}의 이미지`} />
-            <MenuTitle>{menuItem.title}<MenuSubtitle>{menuItem.subtitle}</MenuSubtitle></MenuTitle>
-          </Menu>
-        ))}
-      </ReactSlider>
-    </>
-  );
-};
-
-export default HomeSection;

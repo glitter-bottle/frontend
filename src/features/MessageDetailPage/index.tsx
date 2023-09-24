@@ -11,61 +11,6 @@ interface ClickIconProps {
   isHidden: boolean;
 }
 
-const Container = styled.div`
-  position: relative;
-  width:100%;
-  height:100%;
-`
-const BigImg = styled.img`
-  width: 100%;
-  height:100%;
-`
-const ClickIcon = styled.div<ClickIconProps>`
-  position: absolute; 
-  bottom: 0;
-  left:50%;
-  transform: translate(-50%, -50%);
-  cursor: pointer;
-  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;;
-  opacity: ${(props) => (props.isHidden ? "0" : "1")};
-  &:hover {
-    transform: translate(-50%, -70%); 
-  }
-`
-const Btn = styled.button`
-  color: #fff;
-`
-const ClickText =styled.p`
-  font-size: 14px;
-`
-const ModalBox = styled.div`
-  position: absolute; 
-  bottom: -150px;
-  width: 100%;
-  height: 150px;
-  border-radius: 30px 30px 0 0;
-  background-color:#16161F; 
-  transition: bottom .8s ease-in-out;
-`
-const Modal = styled.ul`
-  padding: 0 50px;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-`
-const ModalItem = styled.li`
-  margin: auto 0;
-  font-size: 14px;
-  cursor:pointer;
-`
-const ModalText = styled.p`
-  display: inline-block;
-  padding-left: 10px;
-`
-const Line = styled.div`
-  border-top: 1px dashed #fff;
-`
-
 interface BgDataProps {
   id: string;
   category: string;
@@ -139,3 +84,58 @@ const MessageDetailSection = () => {
 }
 
 export default MessageDetailSection;
+
+const Container = styled.div`
+  position: relative;
+  width:100%;
+  height:100%;
+`
+const BigImg = styled.img`
+  width: 100%;
+  height:100%;
+`
+const ClickIcon = styled.div<ClickIconProps>`
+  position: absolute; 
+  bottom: 0;
+  left:50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;;
+  opacity: ${(props) => (props.isHidden ? "0" : "1")};
+  &:hover {
+    transform: translate(-50%, -70%); 
+  }
+`
+const Btn = styled.button`
+  color: #fff;
+`
+const ClickText =styled.p`
+  font-size: 14px;
+`
+const ModalBox = styled.div`
+  position: absolute; 
+  bottom: -150px;
+  width: 100%;
+  height: 150px;
+  border-radius: 30px 30px 0 0;
+  background-color:#16161F; 
+  transition: bottom .8s ease-in-out;
+`
+const Modal = styled.ul`
+  padding: 0 50px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`
+const ModalItem = styled.li`
+  margin: auto 0;
+  font-size: 14px;
+  cursor:pointer;
+`
+const ModalText = styled.p`
+  display: inline-block;
+  padding-left: 10px;
+`
+const Line = styled.div`
+  border-top: 1px dashed #fff;
+`
