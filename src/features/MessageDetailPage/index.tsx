@@ -33,7 +33,7 @@ const MessageDetailSection = () => {
       // 데이터를 읽어와서 state 변수에 저장
       datas?.forEach((doc) => {
         const dataObj = { ...doc.data(), id: doc.id };
-        console.log('데이터',dataObj)
+
         setBgData((prev) => [...prev, dataObj as BgDataProps]);
       });
     };

@@ -43,8 +43,26 @@ const HomeSection = ({ settings = DEFAULT_SETTINGS }: Props) => {
       <FindMessage isFound={true}/>
       <ReactSlider {...settings} className='slider' >
         {menuData.map((menuItem, index) => (
-          <Menu key={index} onClick={()=>{
-            navigate('/message', { state: { menuItem } });
+          <Menu 
+            key={index} 
+            onClick={()=>{
+              let min = 1;
+              let max = 10;
+              
+              if (menuItem.keyGroup === 10) {
+                min = 1;
+                max = 10;
+              } else if (menuItem.keyGroup === 20) {
+                min = 11;
+                max = 20;
+              } else if (menuItem.keyGroup === 30) {
+                min = 21;
+                max = 30;
+              }
+              const randomKeyNum = Math.floor(Math.random() * (max - min + 1)) + min;
+
+            navigate('/message', 
+            { state: { randomKeyNum } });
           }}>
             <MenuImg src={menuItem.imgSrc} alt={`${menuItem.title}의 이미지`} />
             <MenuTitle>{menuItem.title}<MenuSubtitle>{menuItem.subtitle}</MenuSubtitle></MenuTitle>
