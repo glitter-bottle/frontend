@@ -10,7 +10,7 @@ import {
     FiClipboard,
     FiMaximize2,
 } from "react-icons/fi";
-import { collection, getDocs, query, where, addDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc } from "firebase/firestore";
 import { auth, db } from "../../firebaseApp";
 import { useEffect, useState } from "react";
 import { saveAs } from "file-saver";
@@ -24,7 +24,6 @@ interface BgDataProps {
 }
 
 const MessageSection = () => {
-
     const location = useLocation();
     const navigate = useNavigate();
     const randomKeyNum = location.state.randomKeyNum;
@@ -102,7 +101,7 @@ const MessageSection = () => {
             });
 
             // 이미지를 사용자 컬렉션에 추가한 후에 메시지 표시 또는 다른 작업을 수행할 수 있습니다.
-            console.log("이미지가 사용자 컬렉션에 추가되었습니다.");
+      
             setShowDownloadMessage(true);
             setTimeout(() => {
                 setShowDownloadMessage(false);
@@ -158,48 +157,6 @@ const MessageSection = () => {
             </BottomSection>
         </Container>
     );
-  
-
-  return (
-    <Container>
-      <TodayDate />
-      <FindMessage isFound={false}/>
-      <RandomWrapping onClick={handleRandomWrappingClick}>
-        <RandomImg imgUrl={imgUrl} />
-        <MaxIcon>
-          <FiMaximize2 size='20'/>
-        </MaxIcon>
-      </RandomWrapping>
-      <BottomSection>
-        <BottomBtnList>
-          <BttomBtn>
-            <Link href='/home'>
-              <FiRefreshCcw size='27'/>
-            </Link>
-            <BtnText>다른 문장</BtnText>
-          </BttomBtn>
-          <BttomBtn onClick={handleDownloadImage}>
-            <Link>
-              <FiDownload size='27'/>
-            </Link>
-            <BtnText>이미지 저장</BtnText>
-            {
-            showDownloadMessage && 
-            <DownloadMessage>
-              <AiFillCheckCircle /> 이미지가 저장되었습니다.
-            </DownloadMessage>}
-          </BttomBtn>
-          <BttomBtn onClick={handleSaveToBottle}>
-            <Link>
-              <FiClipboard size='27'/>
-            </Link>
-            <BtnText>이 문장 담기</BtnText>
-          </BttomBtn>
-        </BottomBtnList>
-      </BottomSection>
-    </Container>
-  );
-
 };
 
 export default MessageSection;
