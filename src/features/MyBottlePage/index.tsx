@@ -7,6 +7,8 @@ import { auth, db } from "../../firebaseApp";
 
 interface BgDataProps {
     id: string;
+    userId: string;
+    userName: string;
     category: string;
     imgUrl: string;
     key: number;
@@ -17,27 +19,33 @@ const MybottleSection = () => {
 
     const user = auth.currentUser;
 
-    if(user) {
-        console.log(user)
-    }
-
-
     const [selectedFilters, setSelectedFilters] = useState<string[]>(["전체"]);
     const [bgData, setBgData] = useState<BgDataProps[]>([]);
+
     const filters = ["전체", "명언", "긍정확언", "힐링메시지"];
 
-    const getBg = async () => {
-        const datas = await getDocs(collection(db, "random-data"));
-
-        datas?.forEach((doc) => {
-            const dataObj = { ...doc.data(), id: doc.id };
-            setBgData((prev) => [...prev, dataObj as BgDataProps]);
-        });
-    };
 
     useEffect(() => {
-        getBg();
-    }, []);
+        const getBg = async () => {
+            if (user) {
+                const datas = await getDocs(collection(db, "user_collections"));
+                const dataArr: BgDataProps[] = [];
+                datas?.forEach((doc) => {
+                    const dataObj = { ...doc.data() } as BgDataProps;
+                    if (dataObj.userId === user.uid && (selectedFilters.includes("전체") || selectedFilters.includes(dataObj.category))) {
+                        dataArr.push(dataObj);
+                    }
+                });
+                setBgData(dataArr);
+            }
+        };
+    
+        if (user) {
+            getBg();
+        }
+    }, [user, selectedFilters]);
+
+    console.log(bgData)
 
     const handleRandomWrappingClick = (selectedItem: BgDataProps) => {
         if (selectedItem) {
