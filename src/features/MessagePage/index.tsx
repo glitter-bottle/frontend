@@ -8,6 +8,8 @@ import{ FiDownload, FiRefreshCcw, FiClipboard, FiMaximize2 } from 'react-icons/f
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebaseApp";
 import { useEffect, useState } from 'react';
+import { saveAs } from 'file-saver';
+import { AiFillCheckCircle } from 'react-icons/ai'
 
 interface BgDataProps {
   id: string;
@@ -19,31 +21,11 @@ interface BgDataProps {
 const MessageSection = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const selectedMenu = location.state.menuItem;
-  const keyGroup = selectedMenu.keyGroup
+  const randomKeyNum = location.state.randomKeyNum;
+
   const [bgData, setBgData] = useState<BgDataProps[]>([]);
   const [imgUrl, setImgUrl] = useState('');
-  console.log('넘겨받은 값', keyGroup)
-
-  const generatedNumber = () => {
-    let min, max;
-
-    if (keyGroup === 10) {
-      min = 1;
-      max = 10;
-    } else if (keyGroup === 20) {
-      min = 11;
-      max = 20;
-    } else if (keyGroup === 30) {
-      min = 21;
-      max = 30;
-    }
-    if (min && max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-  }
-  const randomKeyNum = generatedNumber()
-  console.log('내가 뽑은 값', randomKeyNum)
+  const [showDownloadMessage, setShowDownloadMessage] = useState(false);
 
   // Firebase Firestore에서 데이터를 가져오기
   const getBg = async () => {
@@ -52,7 +34,7 @@ const MessageSection = () => {
     // 데이터를 읽어와서 state 변수에 저장
     datas?.forEach((doc) => {
       const dataObj = { ...doc.data(), id: doc.id };
-      console.log('데이터',dataObj)
+
       setBgData((prev) => [...prev, dataObj as BgDataProps]);
     });
   };
@@ -77,8 +59,20 @@ const MessageSection = () => {
         key: matchingObj?.key
       }
     })
-
   }
+
+  const handleDownloadImage = (event:React.MouseEvent) => {
+    event.preventDefault(); 
+
+    saveAs(imgUrl, 'your-image.jpg');
+
+    // 이미지 저장이 완료되면 메시지를 표시하고 3초 후 숨깁니다.
+    setShowDownloadMessage(true);
+    setTimeout(() => {
+      setShowDownloadMessage(false);
+    }, 3000);
+  };
+
   return (
     <Container>
       <TodayDate />
@@ -97,11 +91,16 @@ const MessageSection = () => {
             </Link>
             <BtnText>다른 문장</BtnText>
           </BttomBtn>
-          <BttomBtn>
+          <BttomBtn onClick={handleDownloadImage}>
             <Link>
               <FiDownload size='27'/>
             </Link>
             <BtnText>이미지 저장</BtnText>
+            {
+            showDownloadMessage && 
+            <DownloadMessage>
+              <AiFillCheckCircle /> 이미지가 저장되었습니다.
+            </DownloadMessage>}
           </BttomBtn>
           <BttomBtn>
             <Link>
@@ -201,4 +200,16 @@ const Link = styled.a`
 const BtnText = styled.p`
   font-size: 5px;
   text-align: center;
+`
+const DownloadMessage = styled.div`
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  position: fixed;
+  bottom: 10rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  font-size: 10px;
 `
