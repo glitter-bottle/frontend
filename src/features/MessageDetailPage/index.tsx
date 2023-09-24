@@ -1,11 +1,13 @@
 import React from 'react';
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 import {FiChevronsUp, FiDownload, FiCornerUpLeft} from 'react-icons/fi'
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebaseApp";
 import { useEffect, useState } from 'react';
+import { saveAs } from 'file-saver';
+import { AiFillCheckCircle } from 'react-icons/ai'
 
 interface ClickIconProps {
   isHidden: boolean;
@@ -25,6 +27,8 @@ const MessageDetailSection = () => {
   const [bgData, setBgData] = useState<BgDataProps[]>([]);
   const [imgUrl, setImgUrl] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showDownloadMessage, setShowDownloadMessage] = useState(false);
+  const navigate = useNavigate();
 
     // Firebase Firestore에서 데이터를 가져오기
     const getBg = async () => {
@@ -55,6 +59,29 @@ const MessageDetailSection = () => {
     setIsModalOpen(true);
   };
 
+  const handleDownloadImage = (event:React.MouseEvent) => {
+    event.preventDefault(); 
+
+    saveAs(imgUrl, 'your-image.jpg');
+
+    // 이미지 저장이 완료되면 메시지를 표시하고 2초 후 숨깁니다.
+    setShowDownloadMessage(true);
+
+    // 이미지 저장 후 모달을 닫습니다.
+    setIsModalOpen(false);
+
+    setTimeout(() => {
+      setShowDownloadMessage(false);
+      handleGoBack()
+    }, 2000);
+
+  };
+
+  const handleGoBack = () => {
+    // 이전 페이지로 이동
+    navigate(-1); 
+  };
+
   return (
     <Container>
       <BigImg src={imgUrl} alt=""/>
@@ -68,17 +95,24 @@ const MessageDetailSection = () => {
       </ClickIcon>
       <ModalBox style={{ bottom: isModalOpen ? '0' : '-150px' }}>
         <Modal>
-          <ModalItem>
+          <ModalItem onClick={handleDownloadImage}>
             <FiDownload />
-            <ModalText>이미지 저장</ModalText>
+            <ModalText>
+              이미지 저장
+            </ModalText>
           </ModalItem >
           <Line></Line>
-          <ModalItem>
+          <ModalItem onClick={handleGoBack}>
             <FiCornerUpLeft />
             <ModalText>뒤로 가기</ModalText>
           </ModalItem>
         </Modal>
       </ModalBox>
+      {
+        showDownloadMessage && 
+        <DownloadMessage>
+          <AiFillCheckCircle /> 이미지가 저장되었습니다.
+        </DownloadMessage>}
     </Container>
   )
 }
@@ -86,9 +120,9 @@ const MessageDetailSection = () => {
 export default MessageDetailSection;
 
 const Container = styled.div`
-  position: relative;
   width:100%;
   height:100%;
+  position:relative;
 `
 const BigImg = styled.img`
   width: 100%;
@@ -138,4 +172,16 @@ const ModalText = styled.p`
 `
 const Line = styled.div`
   border-top: 1px dashed #fff;
+`
+const DownloadMessage = styled.div`
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  position: absolute;
+  top: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  font-size: 10px;
 `
