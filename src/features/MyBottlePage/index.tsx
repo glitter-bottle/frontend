@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { collection, getDocs } from "firebase/firestore";
 import { auth, db } from "../../firebaseApp";
-
 
 interface BgDataProps {
     id: string;
@@ -13,7 +13,14 @@ interface BgDataProps {
 }
 
 const MybottleSection = () => {
-    console.log(auth);
+    const navigate = useNavigate();
+
+    const user = auth.currentUser;
+
+    if(user) {
+        console.log(user)
+    }
+
 
     const [selectedFilters, setSelectedFilters] = useState<string[]>(["전체"]);
     const [bgData, setBgData] = useState<BgDataProps[]>([]);
@@ -32,9 +39,16 @@ const MybottleSection = () => {
         getBg();
     }, []);
 
-
-    console.log(bgData);
-
+    const handleRandomWrappingClick = (selectedItem: BgDataProps) => {
+        if (selectedItem) {
+            navigate("/message-detail", {
+                state: {
+                    image: selectedItem.imgUrl,
+                    key: selectedItem.key,
+                },
+            });
+        }
+    };
 
     const handleFilterClick = (selectedCategory: string) => {
         if (selectedCategory === "전체") {
@@ -71,7 +85,10 @@ const MybottleSection = () => {
             <ListSec>
                 <MyList>
                     {filteredData.map((item, idx) => (
-                        <EachItem key={`items-${idx}`}>
+                        <EachItem
+                            key={`items-${idx}`}
+                            onClick={() => handleRandomWrappingClick(item)}
+                        >
                             <img src={item.imgUrl} alt={item.category} />
                         </EachItem>
                     ))}
