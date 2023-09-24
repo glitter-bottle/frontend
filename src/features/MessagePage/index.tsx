@@ -24,6 +24,7 @@ interface BgDataProps {
 }
 
 const MessageSection = () => {
+
     const location = useLocation();
     const navigate = useNavigate();
     const randomKeyNum = location.state.randomKeyNum;
@@ -157,6 +158,48 @@ const MessageSection = () => {
             </BottomSection>
         </Container>
     );
+  
+
+  return (
+    <Container>
+      <TodayDate />
+      <FindMessage isFound={false}/>
+      <RandomWrapping onClick={handleRandomWrappingClick}>
+        <RandomImg imgUrl={imgUrl} />
+        <MaxIcon>
+          <FiMaximize2 size='20'/>
+        </MaxIcon>
+      </RandomWrapping>
+      <BottomSection>
+        <BottomBtnList>
+          <BttomBtn>
+            <Link href='/home'>
+              <FiRefreshCcw size='27'/>
+            </Link>
+            <BtnText>다른 문장</BtnText>
+          </BttomBtn>
+          <BttomBtn onClick={handleDownloadImage}>
+            <Link>
+              <FiDownload size='27'/>
+            </Link>
+            <BtnText>이미지 저장</BtnText>
+            {
+            showDownloadMessage && 
+            <DownloadMessage>
+              <AiFillCheckCircle /> 이미지가 저장되었습니다.
+            </DownloadMessage>}
+          </BttomBtn>
+          <BttomBtn onClick={handleSaveToBottle}>
+            <Link>
+              <FiClipboard size='27'/>
+            </Link>
+            <BtnText>이 문장 담기</BtnText>
+          </BttomBtn>
+        </BottomBtnList>
+      </BottomSection>
+    </Container>
+  );
+
 };
 
 export default MessageSection;
