@@ -2,30 +2,12 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import TodayDate from '../../components/TodayDate';
 import FindMessage from '../../components/FindMessage';
-
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import{ FiDownload, FiRefreshCcw, FiClipboard, FiMaximize2 } from 'react-icons/fi'
-
-const randomData = [
-  {
-    image: 'images/random1.png',
-    message: '당신은 움츠리기보다/활짝 피어나도록 만들어진 존재입니다',
-    authorship: '오프라 윈프리'
-  },
-  {
-    image: 'images/random2.png',
-    message: '자신의 능력을 믿어야 한다./그리고 끝까지 굳세게 밀고 나가라',
-    authorship: '로잘린 카터'
-  },
-  {
-    image: 'images/random3.png',
-    message: '행복의 한 쪽 문이 닫히면/다른 쪽 문이 열린다./그러나 흔히 우리는/닫혀진 문을 오랫동안 보기 때문에/우리를 위해 열려 있는 문을 보지 못한다.',
-    authorship: '헬렌 켈러'
-  }
-]
-
-let randomNum = Math.floor(Math.random() * randomData.length);
-const randomArr = randomData[randomNum].message.split('/');
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebaseApp";
+import { useEffect, useState } from 'react';
 
 const Container = styled.div`
   position: relative;
@@ -73,21 +55,6 @@ const MaxIcon = styled.div`
   right: 5%;
   z-index:2;
 `
-const RandomMessage = styled.p`
-  width: 60%;
-  position: absolute;
-  top: 35%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  word-break: keep-all;
-  font-size: 1rem;
-  text-align: center;
-`
-const RandomAuthorship = styled.span`
-  display: block;
-  margin-top: 2rem;
-  padding: 0 3rem;
-`
 const BottomSection = styled.div`
   width: calc(100% - 6rem);
   position: absolute;
@@ -120,15 +87,72 @@ const BtnText = styled.p`
   font-size: 5px;
   text-align: center;
 `
+interface BgDataProps {
+  id: string;
+  category: string;
+  imgUrl: string;
+  key: number;
+}
 
 const MessageSection = () => {
-
+  const location = useLocation();
   const navigate = useNavigate();
+  const selectedMenu = location.state.menuItem;
+  const keyGroup = selectedMenu.keyGroup
+  const [bgData, setBgData] = useState<BgDataProps[]>([]);
+  const [imgUrl, setImgUrl] = useState('');
+  console.log('넘겨받은 값', keyGroup)
+
+  const generatedNumber = () => {
+    let min, max;
+
+    if (keyGroup === 10) {
+      min = 1;
+      max = 10;
+    } else if (keyGroup === 20) {
+      min = 11;
+      max = 20;
+    } else if (keyGroup === 30) {
+      min = 21;
+      max = 30;
+    }
+    if (min && max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+  }
+  const randomKeyNum = generatedNumber()
+  console.log('내가 뽑은 값', randomKeyNum)
+
+  // Firebase Firestore에서 데이터를 가져오기
+  const getBg = async () => {
+    const datas = await getDocs(collection(db, "random-data"));
+    
+    // 데이터를 읽어와서 state 변수에 저장
+    datas?.forEach((doc) => {
+      const dataObj = { ...doc.data(), id: doc.id };
+      console.log('데이터',dataObj)
+      setBgData((prev) => [...prev, dataObj as BgDataProps]);
+    });
+  };
+
+  // 컴포넌트가 처음 렌더링될 때 데이터를 가져오도록 useEffect를 사용.
+  useEffect(() => {
+      getBg();
+  }, []);
+
+  const matchingObj = bgData.find((obj) => obj.key === randomKeyNum);
+
+  useEffect(() => {
+    if (matchingObj) {
+      setImgUrl(matchingObj.imgUrl)
+    } 
+  },[matchingObj])
 
   const handleRandomWrappingClick = () => {
     navigate('/message-detail', {
       state: {
-        image: randomData[randomNum].image
+        image: imgUrl,
+        key: matchingObj?.key
       }
     })
 
@@ -138,23 +162,10 @@ const MessageSection = () => {
       <TodayDate />
       <FindMessage isFound={false}/>
       <RandomWrapping onClick={handleRandomWrappingClick}>
-        <RandomImg src={randomData[randomNum].image} />
+        <RandomImg src={imgUrl} />
         <MaxIcon>
           <FiMaximize2 size='20'/>
         </MaxIcon>
-        <RandomMessage>
-          {
-            randomArr.map((el, i)=>(
-              <React.Fragment key={i}>
-                {el}
-                <br />
-              </React.Fragment>
-            ))
-          }
-          <RandomAuthorship>
-            {`${randomData[randomNum].authorship}`}
-          </RandomAuthorship>
-        </RandomMessage>
       </RandomWrapping>
       <BottomSection>
         <BottomBtnList>

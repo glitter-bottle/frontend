@@ -29,7 +29,9 @@ const MybottleSection = () => {
         getBg();
     }, []);
 
+
     console.log(bgData);
+
 
     const handleFilterClick = (selectedCategory: string) => {
         if (selectedCategory === "전체") {
