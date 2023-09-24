@@ -5,8 +5,8 @@ import FindMessage from '../../components/FindMessage';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import{ FiDownload, FiRefreshCcw, FiClipboard, FiMaximize2 } from 'react-icons/fi'
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../firebaseApp";
+import { collection, getDocs, query, where, addDoc } from "firebase/firestore";
+import { auth, db } from "../../firebaseApp";
 import { useEffect, useState } from 'react';
 import { saveAs } from 'file-saver';
 import { AiFillCheckCircle } from 'react-icons/ai'
@@ -22,6 +22,8 @@ const MessageSection = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const randomKeyNum = location.state.randomKeyNum;
+
+  const user = auth.currentUser;
 
   const [bgData, setBgData] = useState<BgDataProps[]>([]);
   const [imgUrl, setImgUrl] = useState('');
@@ -73,6 +75,29 @@ const MessageSection = () => {
     }, 3000);
   };
 
+  const handleAddToCollection = async () => {
+    if (user) {
+      const collectionRef = collection(db, "user_collections"); // Firestore에 사용자 컬렉션을 만듭니다.
+  
+      // 이미지 정보와 사용자 정보를 함께 저장합니다.
+      await addDoc(collectionRef, {
+        userId: user.uid,
+        userName: user.displayName,
+        key: matchingObj?.key, // 이미지 키 값을 추가
+        imgUrl: matchingObj?.imgUrl, // imgUrl 추가
+        category: matchingObj?.category, // category 추가
+      });
+  
+      // 이미지를 사용자 컬렉션에 추가한 후에 메시지 표시 또는 다른 작업을 수행할 수 있습니다.
+      console.log("이미지가 사용자 컬렉션에 추가되었습니다.");
+    } else {
+      // 사용자가 로그인하지 않은 경우에는 로그인 페이지로 이동하도록 구현할 수 있습니다.
+      navigate("/login");
+    }
+  };
+  
+  
+
   return (
     <Container>
       <TodayDate />
@@ -102,7 +127,7 @@ const MessageSection = () => {
               <AiFillCheckCircle /> 이미지가 저장되었습니다.
             </DownloadMessage>}
           </BttomBtn>
-          <BttomBtn>
+          <BttomBtn onClick={handleAddToCollection}>
             <Link>
               <FiClipboard size='27'/>
             </Link>
