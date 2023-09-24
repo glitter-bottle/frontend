@@ -1,9 +1,11 @@
 import React from 'react';
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
 
 import styled from "styled-components";
 import {FiChevronsUp, FiDownload, FiCornerUpLeft} from 'react-icons/fi'
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebaseApp";
+import { useEffect, useState } from 'react';
 
 interface ClickIconProps {
   isHidden: boolean;
@@ -63,11 +65,46 @@ const ModalText = styled.p`
 const Line = styled.div`
   border-top: 1px dashed #fff;
 `
+
+interface BgDataProps {
+  id: string;
+  category: string;
+  imgUrl: string;
+  key: number;
+}
+
 const MessageDetailSection = () => {
 
   const location = useLocation();
-  const randomImg = location.state?.image || '';
+  const randomKey = location.state?.key || 0;
+  const [bgData, setBgData] = useState<BgDataProps[]>([]);
+  const [imgUrl, setImgUrl] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // Firebase Firestore에서 데이터를 가져오기
+    const getBg = async () => {
+      const datas = await getDocs(collection(db, "random-data"));
+      
+      // 데이터를 읽어와서 state 변수에 저장
+      datas?.forEach((doc) => {
+        const dataObj = { ...doc.data(), id: doc.id };
+        console.log('데이터',dataObj)
+        setBgData((prev) => [...prev, dataObj as BgDataProps]);
+      });
+    };
+  
+    // 컴포넌트가 처음 렌더링될 때 데이터를 가져오도록 useEffect를 사용.
+    useEffect(() => {
+        getBg();
+    }, []);
+
+    const matchingObj = bgData.find((obj) => obj.key ===randomKey );
+
+    useEffect(() => {
+      if (matchingObj) {
+        setImgUrl(matchingObj.imgUrl)
+      } 
+    },[matchingObj])
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -75,7 +112,7 @@ const MessageDetailSection = () => {
 
   return (
     <Container>
-      <BigImg src={randomImg} alt=""/>
+      <BigImg src={imgUrl} alt=""/>
       <ClickIcon onClick={handleOpenModal} isHidden={isModalOpen} >
         <Btn>
           <ClickText>

@@ -5,21 +5,9 @@ import FindMessage from '../../components/FindMessage';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import{ FiDownload, FiRefreshCcw, FiClipboard, FiMaximize2 } from 'react-icons/fi'
-
-const randomData = [
-  {
-    image: 'images/random1.png'
-  },
-  {
-    image: 'images/random2.png'
-  },
-  {
-    image: 'images/random3.png'
-  }
-]
-
-
-// const randomArr = randomData[randomNum].message.split('/');
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebaseApp";
+import { useEffect, useState } from 'react';
 
 const Container = styled.div`
   position: relative;
@@ -67,21 +55,6 @@ const MaxIcon = styled.div`
   right: 5%;
   z-index:2;
 `
-// const RandomMessage = styled.p`
-//   width: 60%;
-//   position: absolute;
-//   top: 35%;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-//   word-break: keep-all;
-//   font-size: 1rem;
-//   text-align: center;
-// `
-// const RandomAuthorship = styled.span`
-//   display: block;
-//   margin-top: 2rem;
-//   padding: 0 3rem;
-// `
 const BottomSection = styled.div`
   width: calc(100% - 6rem);
   position: absolute;
@@ -114,38 +87,72 @@ const BtnText = styled.p`
   font-size: 5px;
   text-align: center;
 `
+interface BgDataProps {
+  id: string;
+  category: string;
+  imgUrl: string;
+  key: number;
+}
 
 const MessageSection = () => {
   const location = useLocation();
-
-const keyGroup = location.state.menuItem;
-
-let randomNum: number;
-
-if (keyGroup === 10) {
-  randomNum = Math.floor(Math.random() * 10) + 1; // 범위: 1~10
-  console.log(randomNum)
-} else if (keyGroup === 20) {
-  randomNum = Math.floor(Math.random() * 10) + 11; // 범위: 11~20
-} else if (keyGroup === 30) {
-  randomNum = Math.floor(Math.random() * 10) + 21; // 범위: 21~30
-} else {
-  randomNum = 0; // 다른 경우에는 0으로 초기화
-} 
-
-console.log(randomNum)
-
-  // const keyGroup = location.state.menuItem;
-  // console.log(keyGroup)
-
   const navigate = useNavigate();
+  const selectedMenu = location.state.menuItem;
+  const keyGroup = selectedMenu.keyGroup
+  const [bgData, setBgData] = useState<BgDataProps[]>([]);
+  const [imgUrl, setImgUrl] = useState('');
+  console.log('넘겨받은 값', keyGroup)
 
-  // let randomNum = Math.floor(Math.random() * randomData.length);
+  const generatedNumber = () => {
+    let min, max;
+
+    if (keyGroup === 10) {
+      min = 1;
+      max = 10;
+    } else if (keyGroup === 20) {
+      min = 11;
+      max = 20;
+    } else if (keyGroup === 30) {
+      min = 21;
+      max = 30;
+    }
+    if (min && max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+  }
+  const randomKeyNum = generatedNumber()
+  console.log('내가 뽑은 값', randomKeyNum)
+
+  // Firebase Firestore에서 데이터를 가져오기
+  const getBg = async () => {
+    const datas = await getDocs(collection(db, "random-data"));
+    
+    // 데이터를 읽어와서 state 변수에 저장
+    datas?.forEach((doc) => {
+      const dataObj = { ...doc.data(), id: doc.id };
+      console.log('데이터',dataObj)
+      setBgData((prev) => [...prev, dataObj as BgDataProps]);
+    });
+  };
+
+  // 컴포넌트가 처음 렌더링될 때 데이터를 가져오도록 useEffect를 사용.
+  useEffect(() => {
+      getBg();
+  }, []);
+
+  const matchingObj = bgData.find((obj) => obj.key === randomKeyNum);
+
+  useEffect(() => {
+    if (matchingObj) {
+      setImgUrl(matchingObj.imgUrl)
+    } 
+  },[matchingObj])
 
   const handleRandomWrappingClick = () => {
     navigate('/message-detail', {
       state: {
-        image: randomData[randomNum].image
+        image: imgUrl,
+        key: matchingObj?.key
       }
     })
 
@@ -155,23 +162,10 @@ console.log(randomNum)
       <TodayDate />
       <FindMessage isFound={false}/>
       <RandomWrapping onClick={handleRandomWrappingClick}>
-        <RandomImg src={randomData[randomNum].image} />
+        <RandomImg src={imgUrl} />
         <MaxIcon>
           <FiMaximize2 size='20'/>
         </MaxIcon>
-        {/* <RandomMessage>
-          {
-            randomArr.map((el, i)=>(
-              <React.Fragment key={i}>
-                {el}
-                <br />
-              </React.Fragment>
-            ))
-          }
-          <RandomAuthorship>
-            {`${randomData[randomNum].authorship}`}
-          </RandomAuthorship>
-        </RandomMessage> */}
       </RandomWrapping>
       <BottomSection>
         <BottomBtnList>
