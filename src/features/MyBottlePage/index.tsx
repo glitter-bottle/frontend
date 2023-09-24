@@ -30,6 +30,9 @@ const MybottleSection = () => {
     }, []);
 
 
+    console.log(bgData);
+
+
     const handleFilterClick = (selectedCategory: string) => {
         if (selectedCategory === "전체") {
             // 전체를 선택한 경우 모든 항목 보이기
