@@ -2,7 +2,8 @@ import React from 'react';
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../firebaseApp";
+import { auth, db } from "../../firebaseApp";
+
 
 interface BgDataProps {
     id: string;
@@ -12,6 +13,8 @@ interface BgDataProps {
 }
 
 const MybottleSection = () => {
+    console.log(auth);
+
     const [selectedFilters, setSelectedFilters] = useState<string[]>(["전체"]);
     const [bgData, setBgData] = useState<BgDataProps[]>([]);
     const filters = ["전체", "명언", "긍정확언", "힐링메시지"];

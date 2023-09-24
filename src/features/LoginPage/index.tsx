@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { GoogleAuthProvider } from 'firebase/auth';
