@@ -33,6 +33,7 @@ const MessageSection = () => {
     const [bgData, setBgData] = useState<BgDataProps[]>([]);
     const [imgUrl, setImgUrl] = useState("");
     const [showDownloadMessage, setShowDownloadMessage] = useState(false);
+    const [showSaveMessage, setShowSaveMessage] = useState(false);
 
     // Firebase Firestore에서 데이터를 가져오기
     const getBg = async () => {
@@ -102,9 +103,9 @@ const MessageSection = () => {
 
             // 이미지를 사용자 컬렉션에 추가한 후에 메시지 표시 또는 다른 작업을 수행할 수 있습니다.
       
-            setShowDownloadMessage(true);
+            setShowSaveMessage(true);
             setTimeout(() => {
-                setShowDownloadMessage(false);
+                setShowSaveMessage(false);
             }, 3000);
         } else {
             // 사용자가 로그인하지 않은 경우에는 로그인 페이지로 이동하도록 구현할 수 있습니다.
@@ -146,7 +147,7 @@ const MessageSection = () => {
                             <FiClipboard size="27" />
                         </Link>
                         <BtnText>이 문장 담기</BtnText>
-                        {showDownloadMessage && (
+                        {showSaveMessage && (
                             <DownloadMessage>
                                 <AiFillCheckCircle /> 문장이 내 보틀에
                                 담겼습니다.

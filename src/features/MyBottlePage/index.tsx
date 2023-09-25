@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { collection, getDocs } from "firebase/firestore";
-import { auth, db } from "../../firebaseApp";
+import { db } from "../../firebaseApp";
+import useAuth from '../../hooks/useAuth';
 
 interface BgDataProps {
     id: string;
@@ -16,12 +17,9 @@ interface BgDataProps {
 
 const MybottleSection = () => {
     const navigate = useNavigate();
-
-    const user = auth.currentUser;
-
+    const user = useAuth();
     const [selectedFilters, setSelectedFilters] = useState<string[]>(["전체"]);
     const [bgData, setBgData] = useState<BgDataProps[]>([]);
-
     const filters = ["전체", "명언", "긍정확언", "힐링메시지"];
 
 
@@ -39,13 +37,18 @@ const MybottleSection = () => {
                 setBgData(dataArr);
             }
         };
-    
+
         if (user) {
             getBg();
         }
     }, [user, selectedFilters]);
 
+    useEffect(() => {
+        setSelectedFilters(["전체"]);
+    }, []);
+
     console.log(bgData)
+    
 
     const handleRandomWrappingClick = (selectedItem: BgDataProps) => {
         if (selectedItem) {
@@ -60,10 +63,8 @@ const MybottleSection = () => {
 
     const handleFilterClick = (selectedCategory: string) => {
         if (selectedCategory === "전체") {
-            // 전체를 선택한 경우 모든 항목 보이기
-            setSelectedFilters(["전체"]); // 초기 탭을 전체로 설정
+            setSelectedFilters(["전체"]);
         } else {
-            // 선택한 탭 업데이트
             setSelectedFilters([selectedCategory]);
         }
     };
@@ -91,6 +92,7 @@ const MybottleSection = () => {
             </Tab>
 
             <ListSec>
+                {filteredData.length === 0 && <p>담은 문장이 없습니다</p>}
                 <MyList>
                     {filteredData.map((item, idx) => (
                         <EachItem
@@ -151,6 +153,10 @@ const ListSec = styled.div`
     height: calc(100vh - 19.6rem);
     overflow: auto;
     padding-bottom: 0.1rem;
+
+    p {
+        text-align: center;
+    }
 `;
 
 const MyList = styled.ul`
