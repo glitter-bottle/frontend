@@ -57,7 +57,6 @@ const MybottleSection = () => {
         setSelectedFilters(["전체"]);
     }, []);
 
-    console.log(bgData);
 
     const handleRandomWrappingClick = (selectedItem: BgDataProps) => {
         if (selectedItem) {
