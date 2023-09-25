@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebaseApp";
-import useAuth from '../../hooks/useAuth';
+import useAuth from "../../hooks/useAuth";
 
 interface BgDataProps {
     id: string;
@@ -20,21 +19,32 @@ const MybottleSection = () => {
     const user = useAuth();
     const [selectedFilters, setSelectedFilters] = useState<string[]>(["전체"]);
     const [bgData, setBgData] = useState<BgDataProps[]>([]);
+    const [loading, setLoading] = useState(true); // 추가: 로딩 상태를 관리
     const filters = ["전체", "명언", "긍정확언", "힐링메시지"];
-
 
     useEffect(() => {
         const getBg = async () => {
+            setLoading(true); // 데이터를 불러올 때 로딩 상태 설정
+
             if (user) {
-                const datas = await getDocs(collection(db, "user_collections"));
+                const q = query(
+                    collection(db, "user_collections"),
+                    where("userId", "==", user.uid)
+                );
+                const querySnapshot = await getDocs(q);
                 const dataArr: BgDataProps[] = [];
-                datas?.forEach((doc) => {
+
+                querySnapshot.forEach((doc) => {
                     const dataObj = { ...doc.data() } as BgDataProps;
-                    if (dataObj.userId === user.uid && (selectedFilters.includes("전체") || selectedFilters.includes(dataObj.category))) {
+                    if (
+                        selectedFilters.includes("전체") ||
+                        selectedFilters.includes(dataObj.category)
+                    ) {
                         dataArr.push(dataObj);
                     }
                 });
                 setBgData(dataArr);
+                setLoading(false); // 데이터를 성공적으로 불러온 후 로딩 상태 해제
             }
         };
 
@@ -47,8 +57,7 @@ const MybottleSection = () => {
         setSelectedFilters(["전체"]);
     }, []);
 
-    console.log(bgData)
-    
+    console.log(bgData);
 
     const handleRandomWrappingClick = (selectedItem: BgDataProps) => {
         if (selectedItem) {
@@ -92,17 +101,29 @@ const MybottleSection = () => {
             </Tab>
 
             <ListSec>
-                {filteredData.length === 0 && <p>담은 문장이 없습니다</p>}
-                <MyList>
-                    {filteredData.map((item, idx) => (
-                        <EachItem
-                            key={`items-${idx}`}
-                            onClick={() => handleRandomWrappingClick(item)}
-                        >
-                            <img src={item.imgUrl} alt={item.category} />
-                        </EachItem>
-                    ))}
-                </MyList>
+                {loading ? ( // 로딩 중일 때 로딩 메시지 표시
+                    <p>로딩 중...</p>
+                ) : (
+                    <MyList>
+                        {filteredData.length === 0 ? ( // 데이터가 없을 때 메시지 표시
+                            <p>담은 문장이 없습니다</p>
+                        ) : (
+                            filteredData.map((item, idx) => (
+                                <EachItem
+                                    key={`items-${idx}`}
+                                    onClick={() =>
+                                        handleRandomWrappingClick(item)
+                                    }
+                                >
+                                    <img
+                                        src={item.imgUrl}
+                                        alt={item.category}
+                                    />
+                                </EachItem>
+                            ))
+                        )}
+                    </MyList>
+                )}
             </ListSec>
         </Container>
     );
@@ -163,6 +184,10 @@ const MyList = styled.ul`
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+
+    p {
+        margin: auto;
+    }
 `;
 
 const EachItem = styled.li`
@@ -180,8 +205,8 @@ const EachItem = styled.li`
 
     img {
         width: 100%;
-        height: 100%;
-    }
+        height
+    };
 `;
 
 export default MybottleSection;
