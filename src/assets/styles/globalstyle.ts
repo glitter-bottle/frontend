@@ -11,35 +11,6 @@ const GlobalStyle = createGlobalStyle`
   box-sizing: border-box;
   margin: 0;
 
-  /* font-face */
-  /* Bold 900 */
-  @font-face {
-    font-family: 'Pretendard';
-    src: url('../fonts/Pretendard-Bold.woff2');
-    font-weight: 900;
-  }
-  
-  /* Semibold 700 */
-  @font-face {
-    font-family: 'Pretendard';
-    src: url('../fonts/Pretendard-SemiBold.woff2');
-    font-weight: 700;
-  }
-  
-  /* Medium 500 */
-  @font-face {
-    font-family: 'Pretendard';
-    src: url('../fonts/Pretendard-Medium.woff2');
-    font-weight: 500;
-  }
-  
-  /* Regular 400 */
-  @font-face {
-    font-family: 'Pretendard';
-    src: url('../fonts/Pretendard-Regular.woff2');
-    font-weight: 400;
-  }
-
   ::-webkit-scrollbar {
     display: none;
   } 

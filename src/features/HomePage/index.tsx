@@ -1,33 +1,80 @@
+import React from "react";
 import TodayDate from '../../components/TodayDate';
 import FindMessage from '../../components/FindMessage';
 import Slider, { Settings } from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { css } from 'styled-components';
 import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
 
 const menuData = [
   {
-    href: '/message',
     imgSrc: 'images/home/home_healing_message.png',
     title: '힐링 메시지',
     subtitle: 'healing message',
+    keyGroup: 10,
   },
   {
-    href: '/message',
     imgSrc: 'images/home/home_life_quotes.png',
     title: '명언',
     subtitle: 'life quotes',
+    keyGroup: 20,
   },
   {
-    href: '/message',
     imgSrc: 'images/home/home_positive_affirmation.png',
     title: '긍정 확언',
     subtitle: 'positive affirmation',
+    keyGroup: 30,
   },
 ]
+
+interface Props {
+  settings?: Settings;
+}
+
+const HomeSection = ({ settings = DEFAULT_SETTINGS }: Props) => {
+  const navigate = useNavigate();
+
+  return (
+    <>
+      <TodayDate />
+      <FindMessage isFound={true}/>
+      <ReactSlider {...settings} className='slider' >
+        {menuData.map((menuItem, index) => (
+          <Menu 
+            key={index} 
+            onClick={()=>{
+              let min = 1;
+              let max = 10;
+              
+              if (menuItem.keyGroup === 10) {
+                min = 1;
+                max = 10;
+              } else if (menuItem.keyGroup === 20) {
+                min = 11;
+                max = 20;
+              } else if (menuItem.keyGroup === 30) {
+                min = 21;
+                max = 30;
+              }
+              const randomKeyNum = Math.floor(Math.random() * (max - min + 1)) + min;
+
+            navigate('/message', 
+            { state: { randomKeyNum } });
+          }}>
+            <MenuImg src={menuItem.imgSrc} alt={`${menuItem.title}의 이미지`} />
+            <MenuTitle>{menuItem.title}<MenuSubtitle>{menuItem.subtitle}</MenuSubtitle></MenuTitle>
+          </Menu>
+        ))}
+      </ReactSlider>
+    </>
+  );
+};
+
+export default HomeSection;
+
 
 const ArrowButton = styled.button<{ pos?: 'left' | 'right' }>`
   z-index: 1;
@@ -99,7 +146,7 @@ const ReactSlider = styled(Slider)`
   opacity:1;
 }
 `
-const Link = styled.a`
+const Menu = styled.a`
   position: relative;
 `
 const MenuImg = styled.img`
@@ -144,26 +191,3 @@ const DEFAULT_SETTINGS: Settings = {
     </ArrowButton>
   ),
 };
-
-interface Props {
-  settings?: Settings;
-}
-
-const HomeSection = ({ settings = DEFAULT_SETTINGS }: Props) => {
-  return (
-    <>
-      <TodayDate />
-      <FindMessage isFound={true}/>
-      <ReactSlider {...settings} className='slider' >
-        {menuData.map((menuItem, index) => (
-          <Link key={index} href={menuItem.href}>
-            <MenuImg src={menuItem.imgSrc} alt={`${menuItem.title}의 이미지`} />
-            <MenuTitle>{menuItem.title}<MenuSubtitle>{menuItem.subtitle}</MenuSubtitle></MenuTitle>
-          </Link>
-        ))}
-      </ReactSlider>
-    </>
-  );
-};
-
-export default HomeSection;
