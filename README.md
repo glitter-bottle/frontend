@@ -1,12 +1,25 @@
 # Glitter Bottle ✨
 오늘을 비춰줄 별빛 문장을 담다라는 주제로 명언, 힐링메시지, 긍정확언의 카테고리를 선택해 랜덤으로 메시지를 뽑고 이미지로 다운받거나 내 보틀에 담아둘 수 있다 
-![](https://velog.velcdn.com/images/jinajung/post/2fa1bc62-b2ff-44f2-8898-b86d087143fc/image.png)
 
-## 프로젝트 설명
+# 프로젝트 소개
 - 기간: 2023.08.20. ~ 2023.09.25
+- 노션 링크: https://www.notion.so/leejoys/BBO-d1d94823ef4b401a930ecf0a60f35095
 - 배포 URL: https://glitter-bottle.web.app
 
-### 구현 기능 
+# 프로젝트 설명 
+## 주요 기능 
+- Firebase auth 구글 로그인
+- Firebase 데이터 저장 
+- 랜덤으로 이미지 뽑기, 이미지 저장 & 내 보틀에 담기
+- 내 보틀 이미지 목록 구현
+
+## 사용 스택 
+- React
+- Type Script 
+- Styled Components
+- Firebase
+ 
+## 구현 기능 
 1. 로그인 페이지 
 - firebase auth로 구글로그인 
 - 로그인 없이 구경하기 
@@ -33,8 +46,3 @@
 - 전체, 명언, 긍정확언, 힐링메시지로 목록 분류 
 - 저장된 이미지 클릭하면 메시지 상세페이지로 연결 
 
-## 사용 스택 
-- React
-- Type Script 
-- Styled Components
-- Firebase 
